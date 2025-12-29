@@ -164,6 +164,11 @@ objs/sha3/fips202.o: ../common/sha3/fips202.c ../common/sha3/fips202.h
 	$(CC) -c $(CFLAGS) ../common/sha3/fips202.c -o objs/sha3/fips202.o
 SHAKE_OBJS := objs/sha3/fips202.o
 
+objs/sha3/soft_op_hash.o: ../common/sha3/soft_op_hash.c ../common/sha3/hardware_driver.h
+	@mkdir -p $(@D)
+	$(CC) -c $(CFLAGS) ../common/sha3/soft_op_hash.c -o objs/sha3/soft_op_hash.o
+SHAKE_OBJS := objs/sha3/fips202.o objs/sha3/soft_op_hash.o
+
 ifeq "$(USE_OPT_LEVEL)" "_FAST_"
 ifeq "$(GENERATION_A)" "SHAKE128"
 # SHAKEx4
