@@ -70,7 +70,7 @@ VALGRIND_CFLAGS= -g -O0 -DDO_VALGRIND_CHECK
 endif
 
 ifeq "$(EXTRA_CFLAGS)" ""
-CFLAGS= -O3 
+CFLAGS= -O3 -static 
 else
 CFLAGS= $(EXTRA_CFLAGS)
 endif
