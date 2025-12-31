@@ -400,26 +400,32 @@ void shake128_squeezeblocks(unsigned char *output, unsigned long long nblocks, u
 
 void shake128(unsigned char *output, unsigned long long outlen, const unsigned char *input,  unsigned long long inlen)
 {
-  uint64_t s[25] = {0};
-  unsigned char t[SHAKE128_RATE];
-  unsigned long long nblocks = outlen/SHAKE128_RATE;
-  size_t i;
-  
-  /* Absorb input */
-  keccak_absorb(s, SHAKE128_RATE, input, inlen, 0x1F);
 
-  /* Squeeze output */
-  keccak_squeezeblocks(output, nblocks, s, SHAKE128_RATE);
+  OP_hash(OP_ALG_SHAKE128, OP_MODE_NORMAL, 
+                          (int)outlen, 
+                          (void*)input, (int)inlen, 
+                          (void*)output);
 
-  output += nblocks*SHAKE128_RATE;
-  outlen -= nblocks*SHAKE128_RATE;
+  // uint64_t s[25] = {0};
+  // unsigned char t[SHAKE128_RATE];
+  // unsigned long long nblocks = outlen/SHAKE128_RATE;
+  // size_t i;
 
-  if (outlen) 
-  {
-    keccak_squeezeblocks(t, 1, s, SHAKE128_RATE);
-    for (i = 0; i < outlen; i++)
-      output[i] = t[i];
-  }
+  // /* Absorb input */
+  // keccak_absorb(s, SHAKE128_RATE, input, inlen, 0x1F);
+
+  // /* Squeeze output */
+  // keccak_squeezeblocks(output, nblocks, s, SHAKE128_RATE);
+
+  // output += nblocks*SHAKE128_RATE;
+  // outlen -= nblocks*SHAKE128_RATE;
+
+  // if (outlen) 
+  // {
+  //   keccak_squeezeblocks(t, 1, s, SHAKE128_RATE);
+  //   for (i = 0; i < outlen; i++)
+  //     output[i] = t[i];
+  // }
 }
 
 
@@ -439,27 +445,34 @@ void shake256_squeezeblocks(unsigned char *output, unsigned long long nblocks, u
 
 void shake256(unsigned char *output, unsigned long long outlen, const unsigned char *input,  unsigned long long inlen)
 {
-  uint64_t s[25];
-  unsigned char t[SHAKE256_RATE];
-  unsigned long long nblocks = outlen/SHAKE256_RATE;
-  size_t i;
 
-  for (i = 0; i < 25; ++i)
-    s[i] = 0;
+  OP_hash(OP_ALG_SHAKE256, OP_MODE_NORMAL, 
+                          (int)outlen, 
+                          (void*)input, (int)inlen, 
+                          (void*)output);
   
-  /* Absorb input */
-  keccak_absorb(s, SHAKE256_RATE, input, inlen, 0x1F);
+  // uint64_t s[25];
+  // unsigned char t[SHAKE256_RATE];
+  // unsigned long long nblocks = outlen/SHAKE256_RATE;
+  // size_t i;
 
-  /* Squeeze output */
-  keccak_squeezeblocks(output, nblocks, s, SHAKE256_RATE);
+  // for (i = 0; i < 25; ++i)
+  //   s[i] = 0;
+  
+  // /* Absorb input */
+  // keccak_absorb(s, SHAKE256_RATE, input, inlen, 0x1F);
 
-  output += nblocks*SHAKE256_RATE;
-  outlen -= nblocks*SHAKE256_RATE;
+  // /* Squeeze output */
+  // keccak_squeezeblocks(output, nblocks, s, SHAKE256_RATE);
 
-  if (outlen) 
-  {
-    keccak_squeezeblocks(t, 1, s, SHAKE256_RATE);
-    for (i = 0; i < outlen; i++)
-      output[i] = t[i];
-  }
+  // output += nblocks*SHAKE256_RATE;
+  // outlen -= nblocks*SHAKE256_RATE;
+
+  // if (outlen) 
+  // {
+  //   keccak_squeezeblocks(t, 1, s, SHAKE256_RATE);
+  //   for (i = 0; i < outlen; i++)
+  //     output[i] = t[i];
+  // }
 }
+
