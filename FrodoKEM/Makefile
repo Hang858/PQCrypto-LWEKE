@@ -22,6 +22,9 @@ else ifeq "$(ARCH)" "PPC"
 else ifeq "$(ARCH)" "s390x"
     ARCHITECTURE=_S390X_
     USE_OPT_LEVEL=_REFERENCE_
+else ifeq "$(ARCH)" "RISCV"
+    ARCHITECTURE=_RISCV_
+    USE_OPT_LEVEL=_FAST_GENERIC_
 endif
 
 ifeq "$(ARCHITECTURE)" "_AMD64_"
@@ -67,7 +70,7 @@ VALGRIND_CFLAGS= -g -O0 -DDO_VALGRIND_CHECK
 endif
 
 ifeq "$(EXTRA_CFLAGS)" ""
-CFLAGS= -O3 
+CFLAGS= -O3 -static 
 else
 CFLAGS= $(EXTRA_CFLAGS)
 endif
@@ -76,7 +79,9 @@ CFLAGS+= -std=gnu11 -Wall -Wextra -DNIX -D $(ARCHITECTURE) -D $(USE_OPT_LEVEL) -
 ifeq "$(CC)" "gcc"
 ifneq "$(ARCHITECTURE)" "_PPC_"
 ifneq "$(ARCHITECTURE)" "_S390X_"
+ifneq "$(ARCHITECTURE)" "_RISCV_" ## rv32 or rv64
 CFLAGS+= -march=native
+endif
 endif
 endif
 endif

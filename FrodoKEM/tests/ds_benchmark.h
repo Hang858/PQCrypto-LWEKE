@@ -79,7 +79,7 @@ static uint64_t rdtsc(void) {
 	uint64_t x;
 	__asm__ volatile (".byte 0x0f, 0x31" : "=A" (x));
 	return x;
-#elif (OS_TARGET == OS_NIX && TARGET == TARGET_ARM)
+#elif (OS_TARGET == OS_NIX && (TARGET == TARGET_ARM || TARGET == TARGET_RISCV))
     struct timespec time;
     clock_gettime(CLOCK_REALTIME, &time);
     return (int64_t)(time.tv_sec*1e9 + time.tv_nsec);

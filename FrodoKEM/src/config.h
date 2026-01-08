@@ -46,6 +46,7 @@
 #define TARGET_ARM          3
 #define TARGET_PPC          4
 #define TARGET_S390X        5
+#define TARGET_RISCV        6
 
 #if defined(_AMD64_)
     #define TARGET TARGET_AMD64 
@@ -57,6 +58,8 @@
     #define TARGET TARGET_PPC 
 #elif defined(_S390X_)
     #define TARGET TARGET_S390X
+#elif defined(_RISCV_)
+    #define TARGET TARGET_RISCV
 #else
     #error -- "Unsupported ARCHITECTURE"
 #endif
