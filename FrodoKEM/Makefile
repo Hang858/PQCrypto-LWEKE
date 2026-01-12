@@ -119,9 +119,9 @@ objs/frodo1344.o: src/frodo1344.c
 	@mkdir -p $(@D)
 	$(CC) -c  $(CFLAGS) $< -o $@
 
-objs/matrix_op.o: src/matrix_op.c src/matrix_op.h
+objs/vector_op.o: src/vector_op.c src/vector_op.h
 	@mkdir -p $(@D)
-	$(CC) -c  $(CFLAGS) src/matrix_op.c -o $@
+	$(CC) -c  $(CFLAGS) src/vector_op.c -o $@
 
 # RAND
 objs/random/random.o: ../common/random/random.c ../common/random/random.h
@@ -130,16 +130,16 @@ objs/random/random.o: ../common/random/random.c ../common/random/random.h
 RAND_OBJS := objs/random/random.o
 
 # KEM_FRODO
-KEM_FRODO640_OBJS := $(addprefix objs/, frodo640.o util.o matrix_op.o)
-KEM_FRODO640_HEADERS := $(addprefix src/, api_frodo640.h config.h frodo_macrify.h matrix_op.h)
+KEM_FRODO640_OBJS := $(addprefix objs/, frodo640.o util.o vector_op.o)
+KEM_FRODO640_HEADERS := $(addprefix src/, api_frodo640.h config.h frodo_macrify.h vector_op.h)
 $(KEM_FRODO640_OBJS): $(KEM_FRODO640_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
-KEM_FRODO976_OBJS := $(addprefix objs/, frodo976.o util.o matrix_op.o)
-KEM_FRODO976_HEADERS := $(addprefix src/, api_frodo976.h config.h frodo_macrify.h matrix_op.h)
+KEM_FRODO976_OBJS := $(addprefix objs/, frodo976.o util.o vector_op.o)
+KEM_FRODO976_HEADERS := $(addprefix src/, api_frodo976.h config.h frodo_macrify.h vector_op.h)
 $(KEM_FRODO976_OBJS): $(KEM_FRODO976_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
-KEM_FRODO1344_OBJS := $(addprefix objs/, frodo1344.o util.o matrix_op.o)
-KEM_FRODO1344_HEADERS := $(addprefix src/, api_frodo1344.h config.h frodo_macrify.h matrix_op.h)
+KEM_FRODO1344_OBJS := $(addprefix objs/, frodo1344.o util.o vector_op.o)
+KEM_FRODO1344_HEADERS := $(addprefix src/, api_frodo1344.h config.h frodo_macrify.h vector_op.h)	
 $(KEM_FRODO1344_OBJS): $(KEM_FRODO1344_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
 # AES
