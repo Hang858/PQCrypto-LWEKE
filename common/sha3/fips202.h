@@ -2,7 +2,7 @@
 #define FIPS202_H
 
 #include <stdint.h>
-#include "hardware_driver.h"
+#include "./PQCDevKitAPI/operator_interface.h"
 
 #define SHAKE128_RATE 168
 #define SHAKE256_RATE 136

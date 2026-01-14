@@ -70,7 +70,7 @@ VALGRIND_CFLAGS= -g -O0 -DDO_VALGRIND_CHECK
 endif
 
 ifeq "$(EXTRA_CFLAGS)" ""
-CFLAGS= -O3 -static 
+CFLAGS= -O3
 else
 CFLAGS= $(EXTRA_CFLAGS)
 endif
@@ -119,9 +119,6 @@ objs/frodo1344.o: src/frodo1344.c
 	@mkdir -p $(@D)
 	$(CC) -c  $(CFLAGS) $< -o $@
 
-objs/vector_op.o: src/vector_op.c src/vector_op.h
-	@mkdir -p $(@D)
-	$(CC) -c  $(CFLAGS) src/vector_op.c -o $@
 
 # RAND
 objs/random/random.o: ../common/random/random.c ../common/random/random.h
@@ -130,16 +127,16 @@ objs/random/random.o: ../common/random/random.c ../common/random/random.h
 RAND_OBJS := objs/random/random.o
 
 # KEM_FRODO
-KEM_FRODO640_OBJS := $(addprefix objs/, frodo640.o util.o vector_op.o)
-KEM_FRODO640_HEADERS := $(addprefix src/, api_frodo640.h config.h frodo_macrify.h vector_op.h)
+KEM_FRODO640_OBJS := $(addprefix objs/, frodo640.o util.o)
+KEM_FRODO640_HEADERS := $(addprefix src/, api_frodo640.h config.h frodo_macrify.h)
 $(KEM_FRODO640_OBJS): $(KEM_FRODO640_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
-KEM_FRODO976_OBJS := $(addprefix objs/, frodo976.o util.o vector_op.o)
-KEM_FRODO976_HEADERS := $(addprefix src/, api_frodo976.h config.h frodo_macrify.h vector_op.h)
+KEM_FRODO976_OBJS := $(addprefix objs/, frodo976.o util.o)
+KEM_FRODO976_HEADERS := $(addprefix src/, api_frodo976.h config.h frodo_macrify.h)
 $(KEM_FRODO976_OBJS): $(KEM_FRODO976_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
-KEM_FRODO1344_OBJS := $(addprefix objs/, frodo1344.o util.o vector_op.o)
-KEM_FRODO1344_HEADERS := $(addprefix src/, api_frodo1344.h config.h frodo_macrify.h vector_op.h)	
+KEM_FRODO1344_OBJS := $(addprefix objs/, frodo1344.o util.o)
+KEM_FRODO1344_HEADERS := $(addprefix src/, api_frodo1344.h config.h frodo_macrify.h)	
 $(KEM_FRODO1344_OBJS): $(KEM_FRODO1344_HEADERS) $(addprefix src/, kem.c noise.c util.c)
 
 # AES
@@ -169,10 +166,15 @@ objs/sha3/fips202.o: ../common/sha3/fips202.c ../common/sha3/fips202.h
 	$(CC) -c $(CFLAGS) ../common/sha3/fips202.c -o objs/sha3/fips202.o
 SHAKE_OBJS := objs/sha3/fips202.o
 
-objs/sha3/soft_op_hash.o: ../common/sha3/soft_op_hash.c ../common/sha3/hardware_driver.h
+objs/sha3/op_hash.o: ../common/sha3/PQCDevKitAPI/op_hash.c ../common/sha3/PQCDevKitAPI/operator_interface.h
 	@mkdir -p $(@D)
-	$(CC) -c $(CFLAGS) ../common/sha3/soft_op_hash.c -o objs/sha3/soft_op_hash.o
-SHAKE_OBJS := objs/sha3/fips202.o objs/sha3/soft_op_hash.o
+	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/op_hash.c -o objs/sha3/op_hash.o
+SHAKE_OBJS := objs/sha3/fips202.o objs/sha3/op_hash.o
+
+objs/sha3/sm3.o: ../common/sha3/PQCDevKitAPI/sm3.c ../common/sha3/PQCDevKitAPI/sm3.h
+	@mkdir -p $(@D)
+	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/sm3.c -o objs/sha3/sm3.o
+SHAKE_OBJS := objs/sha3/op_hash.o objs/sha3/sm3.o objs/sha3/fips202.o
 
 ifeq "$(USE_OPT_LEVEL)" "_FAST_"
 ifeq "$(GENERATION_A)" "SHAKE128"
