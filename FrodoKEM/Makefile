@@ -166,14 +166,14 @@ objs/sha3/fips202.o: ../common/sha3/fips202.c ../common/sha3/fips202.h
 	$(CC) -c $(CFLAGS) ../common/sha3/fips202.c -o objs/sha3/fips202.o
 SHAKE_OBJS := objs/sha3/fips202.o
 
-objs/sha3/op_hash.o: ../common/sha3/PQCDevKitAPI/op_hash.c ../common/sha3/PQCDevKitAPI/operator_interface.h
+objs/sha3/op_hash.o: ../common/sha3/PQCDevKitAPI/soft/op_hash.c ../common/sha3/PQCDevKitAPI/operator_interface.h
 	@mkdir -p $(@D)
-	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/op_hash.c -o objs/sha3/op_hash.o
+	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/soft/op_hash.c -o objs/sha3/op_hash.o
 SHAKE_OBJS := objs/sha3/fips202.o objs/sha3/op_hash.o
 
-objs/sha3/sm3.o: ../common/sha3/PQCDevKitAPI/sm3.c ../common/sha3/PQCDevKitAPI/sm3.h
+objs/sha3/sm3.o: ../common/sha3/PQCDevKitAPI/soft/sm3.c ../common/sha3/PQCDevKitAPI/soft/sm3.h
 	@mkdir -p $(@D)
-	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/sm3.c -o objs/sha3/sm3.o
+	$(CC) -c $(CFLAGS) ../common/sha3/PQCDevKitAPI/soft/sm3.c -o objs/sha3/sm3.o
 SHAKE_OBJS := objs/sha3/op_hash.o objs/sha3/sm3.o objs/sha3/fips202.o
 
 ifeq "$(USE_OPT_LEVEL)" "_FAST_"
